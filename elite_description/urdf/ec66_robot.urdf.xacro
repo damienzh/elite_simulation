@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ec66" >
+  <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
+  <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find elite_description)/urdf/common.gazebo.xacro" />
+
+  <!-- ec66 -->
+  <xacro:include filename="$(find elite_description)/urdf/ec66.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:ec66_robot prefix="" joint_limited="$(arg limited)"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
+  />
+  <!-- ft_sensor -->
+  <xacro:include filename="$(find robotiq_ft_sensor)/urdf/robotiq_ft300.urdf.xacro"/>
+  <xacro:robotiq_ft300 parent="ee_link" prefix="">
+    <origin xyz="-0.01 0.0 0.0" rpy="0.0 1.5708 0.0"/>
+  </xacro:robotiq_ft300>
+
+  <xacro:include filename="$(find elite_description)/urdf/ft300_gazebo.xacro"/>
+
+  <link name="world"/>
+  <joint name="world" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ft300">
+  <gazebo reference="ft300_sensor">
+    <!-- <selfCollide>true</selfCollide> -->
+  </gazebo>
+  <gazebo reference="ft300_mounting_plate">
+    <!-- <selfCollide>true</selfCollide> -->
+  </gazebo>
+  <gazebo reference="robotiq_ft_frame_id">
+    <!-- <selfCollide>true</selfCollide> -->
+  </gazebo>
+  <gazebo reference="ft300_fix">
+    <disableFixedJointLumping>true</disableFixedJointLumping>
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo reference="ft300_mounting_plate">
+    <disableFixedJointLumping>true</disableFixedJointLumping>
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo reference="measurment_joint">
+    <disableFixedJointLumping>true</disableFixedJointLumping>
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo>
+      <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>100.0</updateRate>
+        <topicName>ft_sensor</topicName>
+        <jointName>measurment_joint</jointName>
+        <gaussianNoise>0.0</gaussianNoise>
+	    </plugin>
+  </gazebo>
+</robot>

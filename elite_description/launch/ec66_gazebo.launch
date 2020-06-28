@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="effort_controll" default="false"/>
+  
+  <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
+  <arg name="paused" default="true" doc="Starts gazebo in paused mode" />
+  <arg name="gui" default="true" doc="Starts gazebo gui" />
+
+  <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
+  <arg name="arm_controllers" default="arm_controller"/>
+  <arg name="joint_controller_config" default="arm_controller_ec66.yaml" />
+
+  <group if="$(arg effort_controll)">
+    <arg name="transmission_hw_interface" value="hardware_interface/EffortJointInterface" />
+    <arg name="arm_controllers" value="joint1_controller joint2_controller joint3_controller joint4_controller joint5_controller joint6_controller"/>
+    <arg name="joint_controller_config" value="arm_controller_ec66_effort.yaml" />
+  </group>
+  
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="physics" value="ode"/>
+  </include>
+
+  <!-- send robot urdf to param server -->
+  <include file="$(find elite_description)/launch/ec66_upload.launch">
+    <arg name="limited" value="$(arg limited)"/>
+    <arg name="transmission_hw_interface" value="$(arg transmission_hw_interface)"/>
+    
+  </include>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
+        args="-urdf -param robot_description -model robot -z 0.5
+              -J shoulder_lift_joint -1.5708
+              -unpause" />
+
+  <include file="$(find elite_description)/launch/controller_utils.launch">
+    <arg name="joint_controller_config" value="$(arg joint_controller_config)" />
+    <arg name="arm_controllers" value="$(arg arm_controllers)"/>
+  </include>
+
+  <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
+
+</launch>

@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: elite_description
+    relative_path: urdf/ec66_robot.urdf.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/ec66.srdf
+  CONFIG:
+    author_name: k
+    author_email: k@email.com
+    generated_timestamp: 1591940307

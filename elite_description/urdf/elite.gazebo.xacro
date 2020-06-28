@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="elite_arm_gazebo" params="prefix">
+
+    <gazebo reference="${prefix}shoulder_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+    <gazebo reference="${prefix}upper_arm_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+    <gazebo reference="${prefix}forearm_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+    <gazebo reference="${prefix}wrist_1_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+    <gazebo reference="${prefix}wrist_3_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+    <gazebo reference="${prefix}wrist_2_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+    <gazebo reference="${prefix}ee_link">
+      <!-- <selfCollide>true</selfCollide> -->
+    </gazebo>
+     <gazebo referecne="${prefix}shoulder_pan_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+    <gazebo referecne="${prefix}shoulder_lift_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+    <gazebo referecne="${prefix}elbow_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+    <gazebo referecne="${prefix}wrist_1_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+    <gazebo referecne="${prefix}wrist_2_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+    <gazebo referecne="${prefix}wrist_3_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+    <gazebo referecne="${prefix}ee_fixed_joint">
+		  <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+		  <disableFixedJointLumping>true</disableFixedJointLumping>
+	  </gazebo>
+  </xacro:macro>
+
+</robot>
